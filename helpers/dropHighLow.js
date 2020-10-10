@@ -1,19 +1,9 @@
-import {
-  head,
-  last,
-  sort,
-  compose,
-  omit,
-  filter,
-  without,
-  min,
-  max,
-  reduce,
-  converge
-} from 'ramda'
+import { compose, converge, identity, max, min, reduce, without } from 'ramda'
 
 const getLowest = reduce(min, Number.MAX_VALUE)
 const getHighest = reduce(max, Number.MIN_VALUE)
+const getExcluded = converge((a, b) => [a, b], [getLowest, getHighest])
+const excludeLowHigh = converge(without, [getExcluded, identity])
 
 const dropHighLow = (data) => {
   const low = reduce(min, Number.MAX_VALUE, data)
@@ -23,13 +13,11 @@ const dropHighLow = (data) => {
 }
 
 const dropHighLow2 = (data) => {
-  const getLowest = reduce(min, Number.MAX_VALUE)
-  const getHighest = reduce(max, Number.MIN_VALUE)
-  const getExcluded = converge((a, b) => [a, b], [getLowest, getHighest])
-
   const excluded = getExcluded(data)
 
   return without(excluded)(data)
 }
 
-export { dropHighLow, dropHighLow2 }
+const dropHighLow3 = (data) => excludeLowHigh(data)
+
+export { dropHighLow, dropHighLow2, dropHighLow3 }
