@@ -18,6 +18,6 @@ const dropHighLow2 = (data) => {
   return without(excluded)(data)
 }
 
-const dropHighLow3 = (data) => excludeLowHigh(data)
+const dropHighLow3 = excludeLowHigh
 
 export { dropHighLow, dropHighLow2, dropHighLow3 }
